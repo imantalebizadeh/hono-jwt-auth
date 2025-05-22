@@ -1,9 +1,15 @@
 import { Hono } from "hono";
+import { type JwtVariables } from "hono/jwt";
+import { logger } from "hono/logger";
 
-const app = new Hono();
+import { authApp } from "@/routes/auth";
 
-app.get("/", (c) => {
-  return c.text("Hello Hono!");
-});
+type Variables = JwtVariables;
+
+const app = new Hono<{ Variables: Variables }>().basePath("/api");
+
+app.use(logger());
+
+app.route("/", authApp);
 
 export default app;
