@@ -37,8 +37,17 @@ export const verifyCredentials = async (
   email: string,
   password: string
 ): Promise<User | undefined> => {
-  const hashedPassword = await Bun.password.hash(password);
-  return db
-    .query("SELECT * FROM users WHERE email = ? AND password = ?")
-    .get(email, hashedPassword) as User | undefined;
+  const user = db.query("SELECT * FROM users WHERE email = ?").get(email) as
+    | User
+    | undefined;
+
+  if (!user) {
+    return undefined;
+  }
+
+  if (await Bun.password.verify(password, user.password)) {
+    return user;
+  }
+
+  return undefined;
 };
