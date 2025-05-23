@@ -18,10 +18,10 @@ This is a simple JWT-based authentication system built with:
 
 3. Set up your environment variables:
 
-```bash
-# Create a .env file
-echo "SECRET_KEY=your_secret_key_here" > .env
-```
+    ```bash
+    # Create a .env file
+    echo "SECRET_KEY=your_secret_key_here" > .env
+    ```
 
 ## Running the application
 
